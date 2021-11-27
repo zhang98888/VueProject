@@ -34,5 +34,7 @@
   "main": "babel.config.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "builddev": "set NODE_ENV=dev&&vue-cli-service build",
+  "buildprod": "set NODE_ENV=prod&&vue-cli-service build"
 }
