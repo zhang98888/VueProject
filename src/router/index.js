@@ -10,6 +10,7 @@ import productDetail from '../views/productDetail.vue'
 
 
 const routes = [
+  
   {
     path: '',
     name: 'Index',

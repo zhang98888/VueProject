@@ -17,7 +17,7 @@ module.exports ={
 	        }
         }
     },
-	publicPath: "./",
+	publicPath: "/",
 	lintOnSave: false,
 	// configureWebpack: {
 	//   resolve: {
