@@ -17,7 +17,7 @@ module.exports ={
 	        }
         }
     },
-	publicPath: "/",
+	publicPath: process.env.NODE_ENV === "production" ? "/pc" : "/",
 	lintOnSave: false,
 	// configureWebpack: {
 	//   resolve: {
