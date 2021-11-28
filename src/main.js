@@ -11,7 +11,7 @@ import tabs from './store/tabs'
 
 const app = createApp(App);
 app.provide('$axios', axios);
-axios.defaults.baseURL = 'http://8.208.82.237:9000/api'
+axios.defaults.baseURL = 'http://8.208.82.237:9000/'
 app.config.globalProperties.$http = axios
 axios.interceptors.request.use(config =>{
     console.log(config)
