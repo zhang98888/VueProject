@@ -198,6 +198,58 @@
       </span>
     </template>
   </el-dialog>
+  <el-dialog title="User Information" v-model="userdialogFormVisible">
+    <el-form :model="userform">
+      <el-form-item label="user name" :label-width="120">
+        <el-input
+          v-model="userform.username"
+          autocomplete="on"
+          style="width: 80%"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="mobile" :label-width="120">
+        <el-input
+          v-model="userform.userMobie"
+          autocomplete="off"
+          style="width: 80%"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="Department" :label-width="120">
+        <el-input
+          v-model="userform.departmentid"
+          autocomplete="off"
+          style="width: 80%"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="Email" :label-width="120">
+        <el-input
+          v-model="userform.userEmail"
+          autocomplete="off"
+          style="width: 80%"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="Level" :label-width="120">
+        <el-input
+          v-model="userform.userLevel"
+          autocomplete="off"
+          style="width: 80%"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="status" :label-width="120">
+        <el-input
+          v-model="userform.workingStatus"
+          autocomplete="off"
+          style="width: 80%"
+        ></el-input>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="saveUserForm">Confirm</el-button>
+        <el-button @click="userdialogFormVisible = false">Cancel</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -212,7 +264,9 @@ export default {
       dialogFormVisible: false,
       form: {},
       dialogEdidFormVisible: false,
-      editForm: {}
+      editForm: {},
+      userdialogFormVisible: false,
+      userform: {}
     }
   },
   created() {
@@ -275,19 +329,44 @@ export default {
             type: 'error'
           })
         } else {
+          this.dialogEdidFormVisible = false
+          this.editForm = {}
+          this.loadAddre()
           ElMessage({
             showClose: true,
             message: res.data.msg,
             type: 'success'
           })
-          this.dialogEdidFormVisible = false
-          this.editForm = {}
-          this.loadAddre()
+        }
+      })
+    },
+    editUserInfo() {
+      this.userform = this.userTable
+      this.userdialogFormVisible = true
+      console.log(this.userform)
+    },
+    saveUserForm() {
+      axios.post('/admin/editUserInfo', this.userform).then(res => {
+        if (res.data.code == 1001) {
+          ElMessage({
+            showClose: true,
+            message: res.data.msg,
+            type: 'error'
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: res.data.msg,
+            type: 'success'
+          })
+          this.userdialogFormVisible = false
+          this.userform = {}
+          this.load()
         }
       })
     },
     remove(index, rows) {
-    console.log(this.addressTable[index])
+      console.log(this.addressTable[index])
       this.$confirm('Do you want to delete?', 'Remind', {
         confirmButtonText: 'confirm',
         cancelButtonText: 'cancel',

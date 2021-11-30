@@ -80,13 +80,13 @@
     <div>
       <el-dialog title="Product Information" v-model="dialogFormVisible">
         <el-form :model="form">
-          <el-form-item label="product id" :label-width="120">
+          <!-- <el-form-item label="product id" :label-width="120">
             <el-input
               v-model="form.productId"
               autocomplete="off"
               style="width: 80%"
             ></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="category id" :label-width="120">
             <el-input
               v-model="form.categoryId"
@@ -141,12 +141,14 @@
             <el-input
               v-model="editForm.productId"
               style="width: 80%"
+              disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="category id" :label-width="120">
             <el-input
               v-model="editForm.categoryId"
               style="width: 80%"
+              disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="product Name" :label-width="120">

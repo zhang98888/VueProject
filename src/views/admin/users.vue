@@ -5,14 +5,14 @@
         >Add Data
         <i class="el-icon-edit el-icon--right"></i>
       </el-button>
-      <el-button type="primary" round
+      <!-- <el-button type="primary" round
         >Import<i class="el-icon-upload el-icon--right"></i
       ></el-button>
 
       <el-button type="primary" round
         >DownLoad
         <i class="el-icon-download el-icon--right"></i>
-      </el-button>
+      </el-button> -->
     </div>
     <div style="margin: 10px 0">
       <el-form :inline="true" :model="searchForm" class="demo-form-inline">

@@ -75,13 +75,13 @@
               style="width: 80%"
             ></el-input>
           </el-form-item>
-          <el-form-item label="picture id" :label-width="120">
+          <!-- <el-form-item label="picture id" :label-width="120">
             <el-input
               v-model="form.pictureId"
               autocomplete="off"
               style="width: 80%"
             ></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="product status" :label-width="120">
             <el-radio v-model="form.isMain" label="1">Is_Main</el-radio>
             <el-radio v-model="form.isMain" label="2">Not Main</el-radio>
@@ -109,6 +109,7 @@
               v-model="editForm.productId"
               autocomplete="off"
               style="width: 80%"
+              disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="picture id" :label-width="120">
@@ -116,6 +117,7 @@
               v-model="editForm.pictureId"
               autocomplete="off"
               style="width: 80%"
+              disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="product status" :label-width="120">
@@ -248,14 +250,14 @@ export default {
     editSave() {
       axios.post('/goodPic/editGoodPic', this.editForm).then(res => {
         if (res.data.status === 1000) {
+          this.editFormVisible = false
+          this.tableData[index] = res.data.data
+          this.editForm = {}
           ElMessage({
             showClose: true,
             message: res.data.msg,
             type: 'success'
           })
-          this.tableData[index] = res.data.data
-          this.editForm = {}
-          this.editFormVisible = false
         } else {
           ElMessage({
             showClose: true,
