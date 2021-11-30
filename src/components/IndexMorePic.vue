@@ -7,7 +7,7 @@
       :offset="index > 0 ? 2 : 0"
     >
       <el-card :body-style="{ padding: '4px' }" shadow="always">
-        <RouterLink :to="'/product/' + picture.prodId">
+        <RouterLink :to="'/product/' + picture.productId">
           <img :src="picture.url" class="image" />
         </RouterLink>
         <div style="padding: 14px;">

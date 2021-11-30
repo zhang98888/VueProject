@@ -34,7 +34,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         v-model:currentPage="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
+        :page-sizes="[10, 20, 30, 40]"
         :page-size="pageSize"
         layout="sizes, prev, pager, next"
         :total="total"
@@ -58,7 +58,7 @@ export default {
       Picture: [],
       currentPage: 1,
       pageSize: 40,
-      total: 400
+      total: 100
     }
   },
   created() {

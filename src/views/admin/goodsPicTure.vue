@@ -90,6 +90,7 @@
             <el-upload
               action="http://8.208.82.237:9000/images/upload"
               :on-success="fileUploadSuccess"
+              ref="upload1"
             >
               <el-button size="small" type="primary">upload</el-button>
             </el-upload>
@@ -128,6 +129,7 @@
             <el-upload
               action="http://8.208.82.237:9000/images/upload"
               :on-success="fileUploadSuccessEdit"
+              ref="upload2"
             >
               <el-button size="small" type="primary">upload</el-button>
             </el-upload>
@@ -211,6 +213,7 @@ export default {
         console.log(res)
         this.dialogFormVisible = false
         this.form = {}
+        this.$refs.upload1.clearFiles()
       })
     },
     fileUploadSuccess(res) {
@@ -253,6 +256,7 @@ export default {
           this.editFormVisible = false
           this.tableData[index] = res.data.data
           this.editForm = {}
+          this.$refs.upload2.clearFiles()
           ElMessage({
             showClose: true,
             message: res.data.msg,
