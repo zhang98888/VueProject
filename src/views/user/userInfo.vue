@@ -209,7 +209,7 @@
       </el-form-item>
       <el-form-item label="mobile" :label-width="120">
         <el-input
-          v-model="userform.userMobie"
+          v-model="userform.userMobile"
           autocomplete="off"
           style="width: 80%"
         ></el-input>

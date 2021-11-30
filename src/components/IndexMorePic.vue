@@ -7,7 +7,9 @@
       :offset="index > 0 ? 2 : 0"
     >
       <el-card :body-style="{ padding: '4px' }" shadow="always">
-        <img :src="picture.url" class="image" />
+        <RouterLink :to="'/product/' + picture.prodId">
+          <img :src="picture.url" class="image" />
+        </RouterLink>
         <div style="padding: 14px;">
           <div class="bottom">
             <p>
@@ -71,7 +73,7 @@ export default {
   height: 130px;
 }
 
-p{
+p {
   font-size: 8px;
 }
 </style>

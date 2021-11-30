@@ -290,14 +290,14 @@ export default {
     editFormsave() {
       axios.post('/product/editProductInfo', this.editForm).then(res => {
         if (res.data.status === 1000) {
+          this.tableData[index] = res.data.data
+          this.editForm = {}
+          this.editFormVisible = false
           ElMessage({
             showClose: true,
             message: res.data.msg,
             type: 'success'
           })
-          this.tableData[index] = res.data.data
-          this.editForm = {}
-          this.editFormVisible = false
         } else {
           ElMessage({
             showClose: true,
@@ -305,7 +305,6 @@ export default {
             type: 'error'
           })
         }
-
         console.log(res)
       })
     },
