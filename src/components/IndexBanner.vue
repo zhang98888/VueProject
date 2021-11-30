@@ -24,7 +24,6 @@ export default {
   methods: {
     load() {
       axios.get('/homeImg').then(res => {
-        console.log(res)
         this.HomeImg = res.data.data
       })
     }

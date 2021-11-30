@@ -30,8 +30,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      currentDate: new Date(),
-      Picture: []
+      Picture: {}
     }
   },
   created() {
@@ -39,10 +38,8 @@ export default {
   },
   methods: {
     load() {
-      axios.get('/goodPic/getAdvanceGoodPic').then(res => {
-        console.log(res)
+      axios.get('/goodPic/getAdvanceGoodPic/1').then(res => {
         this.Picture = res.data.data
-        console.log(this.Picture)
       })
     }
   }

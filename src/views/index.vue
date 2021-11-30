@@ -16,14 +16,14 @@
         <IndexName title="Available" subTitle="Polular rented">
           <template #right><index-more path="/product"/></template>
         </IndexName>
-        <IndexMorePic />
+        <index-more-pic></index-more-pic>
       </div>
       <div class="lines1"></div>
       <div class="main">
         <IndexName title="Working at Home" subTitle="Suitable for working at home">
           <template #right><index-more path="/product"/></template>
         </IndexName>
-        <IndexHomeWork />
+        <index-home-work></index-home-work>
       </div>
       <div class="lines1"></div>
     </el-main>

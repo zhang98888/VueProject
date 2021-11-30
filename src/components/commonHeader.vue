@@ -42,7 +42,6 @@ export default {
   methods: {
     load() {
       axios.get('/category/getAllCategory/' + 1 + '/' + 20).then(res => {
-        console.log(res)
         this.categoryName = res.data.data
         axios
           .get('/cart/', {

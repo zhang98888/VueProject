@@ -7,7 +7,9 @@
       :offset="index > 0 ? 2 : 0"
     >
       <el-card :body-style="{ padding: '4px' }" shadow="always">
-        <img :src="picture.url" class="image" />
+        <RouterLink :to="'/product/' + picture.prodId">
+          <img :src="picture.url" class="image" />
+        </RouterLink>
         <div style="padding: 14px;">
           <div class="bottom">
             <p>
@@ -37,8 +39,7 @@ export default {
   },
   methods: {
     load() {
-      axios.get('/goodPic/getAdvanceGoodPic').then(res => {
-        console.log(res)
+      axios.get('/goodPic/getAdvanceGoodPic/2').then(res => {
         this.Picture = res.data.data
         console.log(this.Picture)
       })
@@ -71,7 +72,7 @@ export default {
   height: 130px;
 }
 
-p{
+p {
   font-size: 8px;
 }
 </style>
