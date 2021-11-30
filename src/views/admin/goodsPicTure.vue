@@ -88,7 +88,7 @@
           </el-form-item>
           <el-form-item label="url" :label-width="120">
             <el-upload
-              action="http://localhost:9000/images/upload"
+              action="http://8.208.82.237:9000/images/upload"
               :on-success="fileUploadSuccess"
             >
               <el-button size="small" type="primary">upload</el-button>
@@ -124,7 +124,7 @@
           </el-form-item>
           <el-form-item label="url" :label-width="120">
             <el-upload
-              action="http://localhost:9000/images/upload"
+              action="http://8.208.82.237:9000/images/upload"
               :on-success="fileUploadSuccessEdit"
             >
               <el-button size="small" type="primary">upload</el-button>
