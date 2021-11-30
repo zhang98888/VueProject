@@ -105,12 +105,10 @@
 
     <div class="pagination">
       <el-pagination
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         v-model:currentPage="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
         :page-size="pageSize"
-        layout="sizes, prev, pager, next"
+        layout="prev, pager, next"
         :total="total"
         style="display: flex; justify-content: center"
       >
@@ -335,7 +333,6 @@ export default {
             type: 'error'
           })
         }
-        console.log(res)
         this.dialogFormVisible = false
       })
     },
@@ -343,7 +340,6 @@ export default {
       axios
         .get('/admin/pageUser/' + this.currentPage + '/' + this.pageSize)
         .then(res => {
-          console.log(res)
           this.tableData = res.data.data
         })
     },
@@ -354,20 +350,15 @@ export default {
           this.searchForm
         )
         .then(res => {
-          console.log(res)
           this.tableData = res.data.data
         })
       this.searchForm = {}
-    },
-    handleSizeChange(val) {
-      console.log(` ${val} per page `)
     },
     handleCurrentChange(val) {
       console.log(`now page: ${val}`)
       axios
         .get('/admin/pageUser/' + this.currentPage + '/' + this.pageSize)
         .then(res => {
-          console.log(res)
           this.tableData = res.data.data
         })
     }

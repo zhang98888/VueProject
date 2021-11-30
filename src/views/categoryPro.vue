@@ -31,12 +31,10 @@
     </el-main>
     <div class="pagination">
       <el-pagination
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         v-model:currentPage="currentPage"
-        :page-sizes="[10, 20, 30, 40]"
         :page-size="pageSize"
-        layout="sizes, prev, pager, next"
+        layout="prev, pager, next"
         :total="total"
         style="display: flex; justify-content: center"
       >
@@ -57,7 +55,7 @@ export default {
     return {
       Picture: [],
       currentPage: 1,
-      pageSize: 40,
+      pageSize: 18,
       total: 100
     }
   },
@@ -81,18 +79,20 @@ export default {
           console.log(this.Picture)
         })
     },
-    handleSizeChange(val) {
-      console.log(` ${val} per page `)
-    },
     handleCurrentChange(val) {
       console.log(`now page: ${val}`)
       axios
-        .get(
-          '/category/getAllCategory/' + this.currentPage + '/' + this.pageSize
+        .post(
+          '/goodPic/category/' +
+            this.$route.params.categoryId +
+            '/' +
+            this.currentPage +
+            '/' +
+            this.pageSize
         )
         .then(res => {
           console.log(res)
-          this.tableData = res.data.data
+          this.Picture = res.data.data
         })
     }
   }

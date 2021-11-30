@@ -27,7 +27,7 @@
         <i class="el-icon-mobile-phone"></i>
         Mobile
       </template>
-      {{ this.userTable.userMobie }}
+      {{ this.userTable.userMobile }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
