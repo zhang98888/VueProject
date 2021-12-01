@@ -1,7 +1,7 @@
 const webpack = require("webpack")
 module.exports ={
     devServer: {
-	    port: 8000,
+	    port: 80,
 	    // proxy:{'/api':{}},代理器中设置/api,项目中请求路径为/api的替换为target
 	    proxy:{
 	        '^/api':{
