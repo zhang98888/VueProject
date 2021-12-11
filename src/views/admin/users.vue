@@ -278,7 +278,8 @@ export default {
             message: res.data.msg,
             type: 'success'
           })
-          this.tableData[index] = res.data.data
+          this.load()
+          this.editForm = {}
           this.editFormVisible = false
         } else {
           ElMessage({
@@ -286,32 +287,45 @@ export default {
             message: res.data.msg,
             type: 'error'
           })
+          this.editForm = {}
+          this.editFormVisible = false
         }
         console.log(res)
       })
     },
     handleRemove(index, rows) {
-      axios
-        .delete('/admin/delete/' + this.tableData[index].userid)
-        .then(res => {
-          if (res.data.status === 1000) {
-            rows.splice(index, 1)
-            ElMessage({
-              showClose: true,
-              message: res.data.msg,
-              type: 'success'
+      this.$confirm('Do you want to remove the user?', 'Remind', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
+        type: 'warning'
+      })
+        .then(() => {
+          axios
+            .delete('/admin/delete/' + this.tableData[index].userid)
+            .then(res => {
+              if (res.data.status === 1000) {
+                rows.splice(index, 1)
+                ElMessage({
+                  showClose: true,
+                  message: res.data.msg,
+                  type: 'success'
+                })
+              } else {
+                ElMessage({
+                  showClose: true,
+                  message: res.data.msg,
+                  type: 'error'
+                })
+              }
+              router.push('/admin/users')
             })
-          } else {
-            ElMessage({
-              showClose: true,
-              message: res.data.msg,
-              type: 'error'
-            })
-          }
-          router.push('/admin/users')
         })
-      console.log(index)
-      console.log(rows)
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'cancel'
+          })
+        })
     },
     addData() {
       this.dialogFormVisible = true
@@ -344,13 +358,22 @@ export default {
         })
     },
     searchInfo() {
+      console.log(this.searchForm)
       axios
         .post(
           '/admin/pageSearchUser/' + this.currentPage + '/' + this.pageSize,
           this.searchForm
         )
         .then(res => {
-          this.tableData = res.data.data
+          if (res.data.status == 1000) {
+            this.tableData = res.data.data
+          } else {
+            ElMessage({
+              showClose: true,
+              message: res.data.msg,
+              type: 'error'
+            })
+          }
         })
       this.searchForm = {}
     },

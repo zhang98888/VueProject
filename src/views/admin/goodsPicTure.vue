@@ -216,26 +216,37 @@ export default {
       this.form.url = res.data
     },
     handleRemove(index, rows) {
-      axios
-        .delete('/goodPic/deleteGoodPic/' + this.tableData[index].pictureId)
-        .then(res => {
-          if (res.data.status === 1000) {
-            rows.splice(index, 1)
-            ElMessage({
-              showClose: true,
-              message: res.data.msg,
-              type: 'success'
+      this.$confirm('Do you want to remove the product?', 'Remind', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
+        type: 'warning'
+      })
+        .then(() => {
+          axios
+            .delete('/goodPic/deleteGoodPic/' + this.tableData[index].pictureId)
+            .then(res => {
+              if (res.data.status === 1000) {
+                rows.splice(index, 1)
+                ElMessage({
+                  showClose: true,
+                  message: res.data.msg,
+                  type: 'success'
+                })
+              } else {
+                ElMessage({
+                  showClose: true,
+                  message: res.data.msg,
+                  type: 'error'
+                })
+              }
             })
-          } else {
-            ElMessage({
-              showClose: true,
-              message: res.data.msg,
-              type: 'error'
-            })
-          }
         })
-      console.log(index)
-      console.log(rows)
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'cancel'
+          })
+        })
     },
     handleEdit(index, rows) {
       console.log(this.tableData[index])
@@ -274,8 +285,15 @@ export default {
           this.searchForm
         )
         .then(res => {
-          console.log(res)
-          this.tableData = res.data.data
+          if (res.data.status == 1000) {
+            this.tableData = res.data.data
+          } else {
+            ElMessage({
+              showClose: true,
+              message: res.data.msg,
+              type: 'error'
+            })
+          }
         })
       this.searchForm = {}
     }

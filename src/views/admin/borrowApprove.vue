@@ -4,8 +4,8 @@
       <el-form :inline="true" :model="searchForm" class="demo-form-inline">
         <el-form-item label="User Id">
           <el-input
-            v-model="searchForm.userId"
-            placeholder="User Id"
+            v-model="searchForm.username"
+            placeholder="User Name"
             autocomplete="off"
           ></el-input>
         </el-form-item>
@@ -108,11 +108,18 @@ export default {
         })
     },
     handleRemove(index, rows) {
-      this.$confirm('Please Confirm UserId: '+this.tableData[index].userId+' Order Id: '+this.tableData[index].orderId, 'Remind', {
-        confirmButtonText: 'confirm',
-        cancelButtonText: 'cancel',
-        type: 'warning'
-      })
+      this.$confirm(
+        'Please Confirm UserId: ' +
+          this.tableData[index].userId +
+          ' Order Id: ' +
+          this.tableData[index].orderId,
+        'Remind',
+        {
+          confirmButtonText: 'confirm',
+          cancelButtonText: 'cancel',
+          type: 'warning'
+        }
+      )
         .then(() => {
           axios.post('/order/endDate/', this.tableData[index]).then(res => {
             if (res.data.status === 1000) {
@@ -137,15 +144,18 @@ export default {
             message: 'Cancel'
           })
         })
-
-      console.log(index)
-      console.log(rows)
     },
     searchCategory() {
+      console.log(this.searchForm.username)
       axios
-        .post(
-          '/category/searchCategory/' + this.currentPage + '/' + this.pageSize,
-          this.searchForm
+        .get(
+          '/order/selectByStatus/' + this.currentPage + '/' + this.pageSize,
+          {
+            params: {
+              username: this.searchForm.username,
+              status: '2'
+            }
+          }
         )
         .then(res => {
           console.log(res)

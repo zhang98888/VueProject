@@ -159,10 +159,10 @@
             <el-input v-model="editForm.rentNum" style="width: 80%"></el-input>
           </el-form-item>
           <el-form-item label="product status" :label-width="120">
-            <el-radio v-model="editForm.productStatus" label="1"
+            <el-radio v-model="editForm.productStatus" :label="1"
               >Available</el-radio
             >
-            <el-radio v-model="editForm.productStatus" label="2"
+            <el-radio v-model="editForm.productStatus" :label="2"
               >Not Available</el-radio
             >
           </el-form-item>
@@ -257,26 +257,37 @@ export default {
       })
     },
     handleRemove(index, rows) {
-      axios
-        .delete('/product/delete/' + this.tableData[index].productId)
-        .then(res => {
-          if (res.data.status === 1000) {
-            rows.splice(index, 1)
-            ElMessage({
-              showClose: true,
-              message: res.data.msg,
-              type: 'success'
+      this.$confirm('Do you want to remove the product?', 'Remind', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
+        type: 'warning'
+      })
+        .then(() => {
+          axios
+            .delete('/product/delete/' + this.tableData[index].productId)
+            .then(res => {
+              if (res.data.status === 1000) {
+                rows.splice(index, 1)
+                ElMessage({
+                  showClose: true,
+                  message: res.data.msg,
+                  type: 'success'
+                })
+              } else {
+                ElMessage({
+                  showClose: true,
+                  message: res.data.msg,
+                  type: 'error'
+                })
+              }
             })
-          } else {
-            ElMessage({
-              showClose: true,
-              message: res.data.msg,
-              type: 'error'
-            })
-          }
         })
-      console.log(index)
-      console.log(rows)
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'cancel'
+          })
+        })
     },
     handleEdit(index, rows) {
       this.editFormVisible = true
@@ -285,7 +296,7 @@ export default {
     editFormsave() {
       axios.post('/product/editProductInfo', this.editForm).then(res => {
         if (res.data.status === 1000) {
-          this.tableData[index] = res.data.data
+          this.load()
           this.editForm = {}
           this.editFormVisible = false
           ElMessage({
@@ -299,8 +310,9 @@ export default {
             message: res.data.msg,
             type: 'error'
           })
+          this.editForm = {}
+          this.editFormVisible = false
         }
-        console.log(res)
       })
     },
     searchProduct() {
@@ -310,8 +322,15 @@ export default {
           this.searchForm
         )
         .then(res => {
-          console.log(res)
-          this.tableData = res.data.data
+          if (res.data.status == 1000) {
+            this.tableData = res.data.data
+          } else {
+            ElMessage({
+              showClose: true,
+              message: res.data.msg,
+              type: 'error'
+            })
+          }
         })
       this.searchForm = {}
     }

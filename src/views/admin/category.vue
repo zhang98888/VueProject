@@ -38,13 +38,26 @@
       style="width: 100%"
       :row-class-name="tableRowClassName"
     >
-      <el-table-column prop="categoryId" label="category id" width="180">
+      <el-table-column
+        prop="categoryId"
+        label="category id"
+        width="200"
+        align="center"
+      >
       </el-table-column>
-      <el-table-column prop="categoryName" label="category Name" width="180">
+      <el-table-column
+        prop="categoryName"
+        label="category Name"
+        width="400"
+        align="center"
+      >
       </el-table-column>
-      <el-table-column prop="categoryLevel" label="category level">
+      <el-table-column
+        prop="categoryLevel"
+        label="category level"
+        align="center"
+      >
       </el-table-column>
-      <el-table-column prop="categoryImg" label="Img"> </el-table-column>
       <el-table-column label="Operation" fixed="right">
         <template #default="scope">
           <el-button
@@ -121,26 +134,22 @@
       <el-dialog title="Category Information" v-model="editFormVisible">
         <el-form :model="editForm">
           <el-form-item label="Category id" :label-width="120">
-            <el-input v-model="form.categoryId" style="width: 80%"></el-input>
+            <el-input
+              v-model="editForm.categoryId"
+              style="width: 80%"
+              disabled
+            ></el-input>
           </el-form-item>
           <el-form-item label="category Name" :label-width="120">
             <el-input
-              v-model="form.categoryName"
+              v-model="editForm.categoryName"
               style="width: 80%"
-              sortable
             ></el-input>
           </el-form-item>
           <el-form-item label="Category Level" :label-width="120">
             <el-input
-              v-model="form.categoryLevel"
+              v-model="editForm.categoryLevel"
               style="width: 80%"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="Img" :label-width="120">
-            <el-input
-              v-model="form.categoryImg"
-              style="width: 80%"
-              sortable
             ></el-input>
           </el-form-item>
         </el-form>
@@ -232,26 +241,37 @@ export default {
       })
     },
     handleRemove(index, rows) {
-      axios
-        .delete('/category/delete/' + this.tableData[index].productId)
-        .then(res => {
-          if (res.data.status === 1000) {
-            rows.splice(index, 1)
-            ElMessage({
-              showClose: true,
-              message: res.data.msg,
-              type: 'success'
+      this.$confirm('Do you want to remove the categoty?', 'Remind', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
+        type: 'warning'
+      })
+        .then(() => {
+          axios
+            .delete('/category/delete/' + this.tableData[index].categoryId)
+            .then(res => {
+              if (res.data.status === 1000) {
+                rows.splice(index, 1)
+                ElMessage({
+                  showClose: true,
+                  message: res.data.msg,
+                  type: 'success'
+                })
+              } else {
+                ElMessage({
+                  showClose: true,
+                  message: res.data.msg,
+                  type: 'error'
+                })
+              }
             })
-          } else {
-            ElMessage({
-              showClose: true,
-              message: res.data.msg,
-              type: 'error'
-            })
-          }
         })
-      console.log(index)
-      console.log(rows)
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'cancel'
+          })
+        })
     },
     handleEdit(index, rows) {
       this.editFormVisible = true
@@ -265,17 +285,18 @@ export default {
             message: res.data.msg,
             type: 'success'
           })
-          this.tableData[index] = res.data.data
+          this.load()
+          this.editFormVisible = false
+          this.editForm = {}
         } else {
           ElMessage({
             showClose: true,
             message: res.data.msg,
             type: 'error'
           })
+          this.editFormVisible = false
+          this.editForm = {}
         }
-        console.log(res)
-        this.editFormVisible = false
-        this.editForm = {}
       })
     },
     searchCategory() {
@@ -285,8 +306,15 @@ export default {
           this.searchForm
         )
         .then(res => {
-          console.log(res)
-          this.tableData = res.data.data
+          if (res.data.status == 1000) {
+            this.tableData = res.data.data
+          } else {
+            ElMessage({
+              showClose: true,
+              message: res.data.msg,
+              type: 'error'
+            })
+          }
         })
       this.searchForm = {}
     }
