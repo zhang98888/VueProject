@@ -2,7 +2,7 @@
   <div style="padding: 10px">
     <div style="margin: 10px 0">
       <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-        <el-form-item label="User Id">
+        <el-form-item label="User Name">
           <el-input
             v-model="searchForm.username"
             placeholder="User Name"
