@@ -114,6 +114,13 @@
             >
               Approve
             </el-button>
+            <el-button
+              @click.prevent="declineOrder(scope.$index, approvalTable)"
+              type="text"
+              size="small"
+            >
+              Decline
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -245,16 +252,52 @@ export default {
       console.log(index)
       console.log(rows)
     },
+    declineOrder(index, rows) {
+      this.$confirm(
+        'Do you want to decline Order Id: ' + this.approvalTable[index].orderId,
+        'Remind',
+        {
+          confirmButtonText: 'confirm',
+          cancelButtonText: 'cancel',
+          type: 'warning'
+        }
+      )
+        .then(() => {
+          axios.post('/order/delete/', this.approvalTable[index]).then(res => {
+            if (res.data.status === 1000) {
+              rows.splice(index, 1)
+              ElMessage({
+                showClose: true,
+                message: res.data.msg,
+                type: 'success'
+              })
+            } else {
+              ElMessage({
+                showClose: true,
+                message: res.data.msg,
+                type: 'error'
+              })
+            }
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      console.log(index)
+      console.log(rows)
+    },
     getUser() {
       let data = new FormData()
       const tokenStr = window.sessionStorage.getItem('token')
       data.append('username', tokenStr)
-      axios
-        .post('/getUserInfo', data)
-        .then(res => {
-          console.log(res.data, data)
-          this.userlevel = res.data.data.userLevel
-        })
+      axios.post('/getUserInfo', data).then(res => {
+        console.log(res.data, data)
+        this.userlevel = res.data.data.userLevel
+      })
     }
   }
 }

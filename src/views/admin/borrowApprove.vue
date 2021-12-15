@@ -46,6 +46,13 @@
           >
             approve
           </el-button>
+          <el-button
+            size="mini"
+            @click.prevent="handleDecline(scope.$index, tableData)"
+            type="text"
+          >
+            Decline
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -122,6 +129,44 @@ export default {
       )
         .then(() => {
           axios.post('/order/endDate/', this.tableData[index]).then(res => {
+            if (res.data.status === 1000) {
+              rows.splice(index, 1)
+              ElMessage({
+                showClose: true,
+                message: res.data.msg,
+                type: 'success'
+              })
+            } else {
+              ElMessage({
+                showClose: true,
+                message: res.data.msg,
+                type: 'error'
+              })
+            }
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Cancel'
+          })
+        })
+    },
+    handleDecline(index, rows) {
+      this.$confirm(
+        'Do you want to decline UserId: ' +
+          this.tableData[index].userId +
+          ' Order Id: ' +
+          this.tableData[index].orderId,
+        'Remind',
+        {
+          confirmButtonText: 'confirm',
+          cancelButtonText: 'cancel',
+          type: 'warning'
+        }
+      )
+        .then(() => {
+          axios.post('/order/delete/', this.tableData[index]).then(res => {
             if (res.data.status === 1000) {
               rows.splice(index, 1)
               ElMessage({

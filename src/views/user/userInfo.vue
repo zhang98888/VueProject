@@ -205,6 +205,7 @@
           v-model="userform.username"
           autocomplete="on"
           style="width: 80%"
+          disabled
         ></el-input>
       </el-form-item>
       <el-form-item label="mobile" :label-width="120">
