@@ -185,10 +185,10 @@
       <el-dialog title="User Information" v-model="editFormVisible">
         <el-form :model="editForm">
           <el-form-item label="user name" :label-width="120">
-            <el-input v-model="editForm.username" style="width: 80%"></el-input>
+            <el-input v-model="editForm.username" style="width: 80%" disabled></el-input>
           </el-form-item>
           <el-form-item label="user id" :label-width="120">
-            <el-input v-model="editForm.userid" style="width: 80%"></el-input>
+            <el-input v-model="editForm.userid" style="width: 80%" disabled></el-input>
           </el-form-item>
           <el-form-item label="department Id" :label-width="120">
             <el-input
